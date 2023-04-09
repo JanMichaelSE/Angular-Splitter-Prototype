@@ -1,36 +1,80 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-custom-splitter',
+  selector: 'custom-splitter',
   templateUrl: './custom-splitter.component.html',
   styleUrls: ['./custom-splitter.component.css']
 })
-export class CustomSplitterComponent {
-  private isResizing = false;
+export class CustomSplitterComponent implements OnDestroy {
+  visible: boolean = true; // Modal Visibility
+  isEditable = true; // Manages form being editable
 
-  constructor(private el: ElementRef) {}
+  // Needed for Form funcitonality
+  firstFormGroup = this.formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this.formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
 
-  onMouseDown(event: MouseEvent) {
-    this.isResizing = true;
-    event.preventDefault();
+  // Grab Elements to measure form width
+  @ViewChild('formDiv') formDiv: ElementRef | null = null;
+  @ViewChild('stepperContainer') stepperContainer: ElementRef | null = null;
+  @ViewChild('modalText', { static: true }) modalText: ElementRef | undefined;
+
+  // Observer use to listen for resize on the form div
+  private resizeObserver: ResizeObserver | null = null;
+
+  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {}
+
+  // Initialize the observer after all content is present on the page
+  ngAfterViewInit() {
+    this.initResizeObserver();
   }
 
-  @HostListener('document:mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
-    if (!this.isResizing) return;
-
-    const containerRect = this.el.nativeElement.querySelector('.splitter-container').getBoundingClientRect();
-    const leftPaneWidth = event.clientX - containerRect.left;
-    const rightPaneWidth = containerRect.width - leftPaneWidth;
-
-    this.el.nativeElement.querySelector('.splitter-pane:first-child').style.flex = `${leftPaneWidth} 1 0%`;
-    this.el.nativeElement.querySelector('.splitter-pane:last-child').style.flex = `${rightPaneWidth} 1 0%`;
-  }
-
-  @HostListener('document:mouseup', ['$event'])
-  onMouseUp(event: MouseEvent) {
-    if (this.isResizing) {
-      this.isResizing = false;
+  // Destroy observer so it stops listening once the component is destroyed.
+  ngOnDestroy(): void {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
     }
+  }
+
+  private initResizeObserver() {
+    // Exit if elements are not present
+    if (!this.formDiv || !this.stepperContainer) {
+      return;
+    }
+
+    // Fire the "checkParentWidth" every time a change is made on the Form Div
+    this.resizeObserver = new ResizeObserver(() => {
+      this.checkParentDivWidth();
+      });
+
+    // This setups up the observer on the Form Div Element 
+    this.resizeObserver.observe(this.formDiv.nativeElement);
+  }
+
+  private checkParentDivWidth() {
+    // Exit if elements are not present
+    if (!this.formDiv || !this.stepperContainer) {
+      return;
+    }
+
+    // Grab the Form Div Width
+    const parentDivWidth = this.formDiv.nativeElement.offsetWidth;
+    const threshold = 600; // Adjust this value based on your requirements
+
+    // Hide the Stepper Container Div if the threshold is met
+    if (parentDivWidth < threshold) {
+      this.renderer.setStyle(this.stepperContainer.nativeElement, 'display', 'none');
+    } else {
+      this.renderer.setStyle(this.stepperContainer.nativeElement, 'display', 'block');
+    }
+  }
+
+  // For showing the big full screen modal
+  showDialog() {
+    this.visible = true;
   }
 }

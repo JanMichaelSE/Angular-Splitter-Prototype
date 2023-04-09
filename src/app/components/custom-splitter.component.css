@@ -1,18 +1,10 @@
-.splitter-container {
-  display: flex;
+/* This is what contains the Material Form */
+.mat-stepper-horizontal {
   height: 100%;
   width: 100%;
+  background-color: red;
 }
 
-.splitter-pane {
-  flex-grow: 1;
-  height: 100%;
-  overflow: auto;
-}
-
-.splitter-divider {
-  background-color: #ccc;
-  cursor: col-resize;
-  height: 100%;
-  width: 5px;
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+  width: 100%;
 }
