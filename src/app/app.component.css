@@ -6,6 +6,10 @@
   background-color: red;
 }
 
+:host ::ng-deep .p-splitter-gutter {
+  background-color: blue;
+}
+
 :host ::ng-deep .mat-horizontal-stepper-header-container {
   width: 100%;
 }
