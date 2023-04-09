@@ -1,0 +1,18 @@
+.splitter-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.splitter-pane {
+  flex-grow: 1;
+  height: 100%;
+  overflow: auto;
+}
+
+.splitter-divider {
+  background-color: #ccc;
+  cursor: col-resize;
+  height: 100%;
+  width: 5px;
+}

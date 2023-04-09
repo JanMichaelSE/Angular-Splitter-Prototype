@@ -1,0 +1,11 @@
+
+/* This is what contains the Material Form */
+.mat-stepper-horizontal {
+  height: 100%;
+  width: 100%;
+  background-color: red;
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+  width: 100%;
+}
