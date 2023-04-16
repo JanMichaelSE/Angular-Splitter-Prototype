@@ -13,52 +13,47 @@
             <ng-template p-splitterPanel pTemplate="panel">
               <div style="height: 100%; width: 100%; display: flex; align-items: center; justify-content: center;">
                 <img src="https://dummyimage.com/600x400/000/fff" alt="Dummy Image" class="img-fluid"
-                  style="position: relative; height: 100%; width: 100%;object-fit: cover;">
+                  style="position: relative; height: 100%;">
               </div>
             </ng-template>
             <!-- Right Panel of Prime NG Splitter -->
             <ng-template p-splitterPanel pTemplate="panel">
               <div #formDiv
                 style="height: 100%; width: 100%; display: flex; align-items: center; justify-content: center;">
-                <!-- Stepper Container to Hide after given width -->
-                <div #stepperContainer style="height: 100%; width: 100%">
-                  <!-- Angular Material Stepper -->
-                  <mat-stepper linear #stepper>
-                    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
-                      <form [formGroup]="firstFormGroup">
-                        <ng-template matStepLabel>Fill out your name</ng-template>
-                        <mat-form-field appearance="fill">
-                          <mat-label>Name</mat-label>
-                          <input matInput formControlName="firstCtrl" placeholder="Last name, First name" required>
-                        </mat-form-field>
-                        <div>
-                          <button mat-button matStepperNext>Next</button>
-                        </div>
-                      </form>
-                    </mat-step>
-                    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
-                      <form [formGroup]="secondFormGroup">
-                        <ng-template matStepLabel>Fill out your address</ng-template>
-                        <mat-form-field appearance="fill">
-                          <mat-label>Address</mat-label>
-                          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                            required>
-                        </mat-form-field>
-                        <div>
-                          <button mat-button matStepperPrevious>Back</button>
-                          <button mat-button matStepperNext>Next</button>
-                        </div>
-                      </form>
-                    </mat-step>
-                    <mat-step>
-                      <ng-template matStepLabel>Done</ng-template>
-                      <p>You are now done.</p>
-                      <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="stepper.reset()">Reset</button>
-                      </div>
-                    </mat-step>
-                  </mat-stepper>
+                <div #stepperContainer style="height: 100%; width: 100%;">
+                  <!-- Angular Table -->
+                  <p-table [value]="products" [scrollable]="true" scrollDirection="horizontal" scrollHeight="100%"
+                    [tableStyle]="{ 'border-collapse': 'collapse' }">
+                    <ng-template pTemplate="body" let-product>
+                      <!-- Angular Flex to Allow Responsiveness -->
+                      <tr style="display: flex; flex-direction: row; flex-wrap: wrap;">
+                        <td style="min-width: 200px;">
+                          <span class="p-float-label">
+                            <input pInputText id="username" />
+                            <label htmlFor="username">Product Code</label>
+                          </span>
+                        </td>
+                        <td style="min-width: 200px;">
+                          <span class="p-float-label">
+                            <input pInputText id="username" />
+                            <label htmlFor="username">Product Name</label>
+                          </span>
+                        </td>
+                        <td style="min-width: 200px;">
+                          <span class="p-float-label">
+                            <input pInputText id="username" />
+                            <label htmlFor="username">Product Category</label>
+                          </span>
+                        </td>
+                        <td style="min-width: 200px;">
+                          <span class="p-float-label">
+                            <input pInputText id="username" />
+                            <label htmlFor="username">Product Quantity</label>
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
                 </div>
               </div>
             </ng-template>

@@ -14,6 +14,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FieldsetModule } from 'primeng/fieldset';
+import { TableModule } from 'primeng/table';
 
 // --- Angular Material Imports ---
 import { MatInputModule } from '@angular/material/input'; 
@@ -51,7 +52,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     InputTextModule,
     CheckboxModule,
     FieldsetModule,
-    MatStepperModule
+    MatStepperModule,
+    TableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,6 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class CustomSplitterComponent implements OnDestroy {
   visible: boolean = true; // Modal Visibility
   isEditable = true; // Manages form being editable
+  products: any[]; // Simulates Products
 
   // Needed for Form funcitonality
   firstFormGroup = this.formBuilder.group({
@@ -26,7 +27,41 @@ export class CustomSplitterComponent implements OnDestroy {
   // Observer use to listen for resize on the form div
   private resizeObserver: ResizeObserver | null = null;
 
-  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {}
+  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {
+    // Setup of dummy data
+      this.products = [
+        {
+          code: "Test1",
+          name: "Pepe",
+          category: "Accessories",
+          quantity: 20
+        },
+        {
+          code: "Test2",
+          name: "Pepe",
+          category: "Accessories",
+          quantity: 20
+        },
+        {
+          code: "Test3",
+          name: "Pepe",
+          category: "Accessories",
+          quantity: 20
+        },
+        {
+          code: "Test4",
+          name: "Pepe",
+          category: "Accessories",
+          quantity: 20
+        },
+        {
+          code: "Test5",
+          name: "Pepe",
+          category: "Accessories",
+          quantity: 20
+        },
+      ];
+  }
 
   // Initialize the observer after all content is present on the page
   ngAfterViewInit() {
@@ -63,7 +98,7 @@ export class CustomSplitterComponent implements OnDestroy {
 
     // Grab the Form Div Width
     const parentDivWidth = this.formDiv.nativeElement.offsetWidth;
-    const threshold = 600; // Adjust this value based on your requirements
+    const threshold = 200; // Adjust this value based on your requirements
 
     // Hide the Stepper Container Div if the threshold is met
     if (parentDivWidth < threshold) {
